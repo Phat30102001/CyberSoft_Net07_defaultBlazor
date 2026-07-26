@@ -1,0 +1,73 @@
+@*
+Parent: Danh sách todo list
+-> hiển thị ds todolist
+
+
+Child:
+input nhập todolist
+button ADD
+
+
+ *@
+@page "/baitap/todo"
+
+<div class="container">
+    <h1>TO DO</h1>
+    <TodoAdd AddTodo="AddTodo" />
+    @foreach (TodoVM item in todoLst)
+    {
+    <div class="d-flex align-items-center mb-2">
+            <input class="form-check-input" type="checkbox" checked="@item.Status" @onchange="() => CheckTask(item)" />
+
+            <label class="form-check-label">
+                @item.Name
+            </label>
+
+            <button class="btn btn-outline-danger btn-small" @onclick="()=>RemoveTask(item)">Delete</button>
+        </div>
+    }
+    <h2>Thống kê</h2>
+    <p>Total: @todoLst.Count</p>
+    <p>Completed: @todoLst.Count(x => x.Status)</p>
+    <p>Remaining: @todoLst.Count(x => !x.Status)</p>
+
+
+    <button class="btn btn-outline-warning mt-3" @onclick="ClearTask">Clear</button>
+</div>
+@code {
+
+    public List<TodoVM> todoLst = new List<TodoVM>();
+    private void AddTodo(string todo)
+    {
+
+        todoLst.Add(new TodoVM(todo));
+    }
+    // check task update trạng thái task
+    private void CheckTask(TodoVM item)
+    {
+        item.Status = !item.Status;
+    }
+    // xoá task
+     private void RemoveTask(TodoVM item)
+    {
+        todoLst.Remove(item);
+    }
+
+    // clear các task đã hoàn thành
+    private void ClearTask(){
+        // task nào có status = true thì xoá
+        todoLst.RemoveAll(a => a.Status);
+    }
+
+
+    public class TodoVM
+    {
+        public string Name { get; set; }
+        public bool Status { get; set; }
+        public TodoVM(string name)
+        {
+            Name = name;
+            Status = false;
+        }
+    }
+}

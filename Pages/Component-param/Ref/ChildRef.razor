@@ -1,0 +1,29 @@
+<h4>@count</h4>
+
+<button class="btn btn-primary"
+        @onclick="Increase">
+    +
+</button>
+
+@code{
+    public int count;
+    private void Increase(){
+        count++;
+    }
+    @* state ở đâu thì hàm thay đổi đặt ở đó *@
+
+    public void Reset(){
+        count=0;
+        // khi ham nay duoc goi , ow bat cu dau 
+        StateHasChanged();
+    }
+
+    // ham giam 
+    public void Decrease(){
+        count--;
+        StateHasChanged();
+    }
+
+
+    
+}

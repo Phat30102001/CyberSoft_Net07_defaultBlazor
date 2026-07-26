@@ -1,0 +1,59 @@
+- dotnet new blazorserver2 -n buoi18
+- đổi buoi18.csproj từ netcore3.1 ->      <TargetFramework>net10.0</TargetFramework>
+
+- xoá các file trong folder Shared
+- xoá Data
+- xoá Counter, Error, FetchData
+- xoá startup
+- chỉnh lại program 
+- chỉnh app.razor
+- chỉnh host
+- chỉnh index.razor
+- chỉnh _import
+
+
+ Blazor , razor
+ - razor : cú pháp code html + css + c# (cshtml)
+    html + css + code c# (thay cho js ở FE khác)
+ - Blazor phát triển trên nền của razor
+    - blazorserver:   khác mô hình MVC
+        code chạy trên server
+    - blazoewasm:
+        code chạy trên browser
+
+
+
+LAYOUT
+ - Nếu page không có @layout -> dùng mainLayout( cấu hình trong app)
+ - page có @layout AdminLayout -> dùng AdminLayout
+ - DefaultLayout chỉ được dùng khi page không có @layout riêng
+
+ONEWAY
+    - hiển thị code c# -> UI
+    - state trong c# khi giá trị của nó thay đổi -> ui thay đổi
+    - khi bấm nut (onclick) -> thay đổi state -> ui thay đổi
+Twoway
+    - EditForm Model="@model"
+    - Editform kêt hợp model binding
+    - OnInvalidSubmit="fail" OnValidSubmit="success"
+    
+    Các bước tạo Editform có xác thực trong Blazor
+    - class model(RegisterVM, loginVM, ProductCreate,...)
+    - tạo form với editform và gán model bằng instance tương ứng
+    - viết hàm xử lý input(input đặc biệt radio, checkbox, select) 
+    - Bật <DataAnnotationsValidator /> để kích hoạt xác thực
+    -  <ValidationMessage For="..."/> để hiển thị lỗi cho từng trường
+Các cái kiểm tra phổ biến 
+    - [Required]: Không được để trống
+    - [EmailAddress]: Email phải đúng định dạng
+    - [Range(min, max)]: Giá trị phải nằm trong khoảng cho phép
+    - [StringLength(max)]: Độ dài chuỗi tối đa
+    - [RegularExpression]: Theo mẫu quy định
+    - min., max ....
+EVENT CALLBACK
+    - Con muốn báo cho cha biết 1 sự kiện nào đó, action (nơi xảy ra sự kiện) nằm ở thằng con
+
+
+REF
+    - cha cần điều khiển , can thiệp vào state/nội bộ  của thằng con
+    - khi có thay đổi state thì nhớ StateHasChanged vì sự kiện gọi ở cha -> khác lifecycle nên cần thông báo

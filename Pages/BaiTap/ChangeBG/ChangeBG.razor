@@ -1,0 +1,35 @@
+@*
+parrent : background màu hiện tại - pink
+
+ds màu : 5 màu
+
+
+child: 5 button tương ứng
+khi nhấn thì đổi màu background của cha
+
+ *@
+
+@page "/baitap/changebg"
+
+
+<div class="@bg border" style="width:500px;height:500px"></div>
+
+<LsButtonBG ListColor="dsColor" Change="changeBackground"/>
+
+@code {
+    private string bg = "bg-white";
+    private List<(string CssClass, string Name)> dsColor = new()
+        {
+            ("bg-danger", "Red"),
+            ("bg-success", "Green"),
+            ("bg-warning", "Yellow"),
+            ("bg-primary", "Blue"),
+            ("bg-white", "White")
+        };
+
+    public void changeBackground(string _bg)
+    {
+        bg = _bg;
+    }
+
+}

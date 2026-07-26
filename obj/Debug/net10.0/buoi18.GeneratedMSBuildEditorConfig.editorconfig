@@ -46,8 +46,24 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQWRtaW4vX0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/phuongnga/Documents/Cybersoft_class/NET07/B18/buoi18/Pages/BaiTap/ChangeBG/ChangeBG.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQmFpVGFwL0NoYW5nZUJHL0NoYW5nZUJHLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/phuongnga/Documents/Cybersoft_class/NET07/B18/buoi18/Pages/BaiTap/ChangeBG/LsButtonBG.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQmFpVGFwL0NoYW5nZUJHL0xzQnV0dG9uQkcucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/phuongnga/Documents/Cybersoft_class/NET07/B18/buoi18/Pages/BaiTap/ChangeCar.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQmFpVGFwL0NoYW5nZUNhci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/phuongnga/Documents/Cybersoft_class/NET07/B18/buoi18/Pages/BaiTap/TodoList/TodoAdd.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQmFpVGFwL1RvZG9MaXN0L1RvZG9BZGQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/phuongnga/Documents/Cybersoft_class/NET07/B18/buoi18/Pages/BaiTap/TodoList/TodoList.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQmFpVGFwL1RvZG9MaXN0L1RvZG9MaXN0LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/phuongnga/Documents/Cybersoft_class/NET07/B18/buoi18/Pages/Component-param/CarItem.razor]
@@ -56,6 +72,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [/Users/phuongnga/Documents/Cybersoft_class/NET07/B18/buoi18/Pages/Component-param/ChildComponent.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQ29tcG9uZW50LXBhcmFtL0NoaWxkQ29tcG9uZW50LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/phuongnga/Documents/Cybersoft_class/NET07/B18/buoi18/Pages/Component-param/EventCalback/ChildCount.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQ29tcG9uZW50LXBhcmFtL0V2ZW50Q2FsYmFjay9DaGlsZENvdW50LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/phuongnga/Documents/Cybersoft_class/NET07/B18/buoi18/Pages/Component-param/EventCalback/ParentCount.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQ29tcG9uZW50LXBhcmFtL0V2ZW50Q2FsYmFjay9QYXJlbnRDb3VudC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/phuongnga/Documents/Cybersoft_class/NET07/B18/buoi18/Pages/Component-param/ListCar.razor]
@@ -68,6 +92,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [/Users/phuongnga/Documents/Cybersoft_class/NET07/B18/buoi18/Pages/Component-param/ParentComponent.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQ29tcG9uZW50LXBhcmFtL1BhcmVudENvbXBvbmVudC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/phuongnga/Documents/Cybersoft_class/NET07/B18/buoi18/Pages/Component-param/Ref/ChildRef.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQ29tcG9uZW50LXBhcmFtL1JlZi9DaGlsZFJlZi5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/phuongnga/Documents/Cybersoft_class/NET07/B18/buoi18/Pages/Component-param/Ref/ParentRef.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQ29tcG9uZW50LXBhcmFtL1JlZi9QYXJlbnRSZWYucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/phuongnga/Documents/Cybersoft_class/NET07/B18/buoi18/Pages/Contact.razor]

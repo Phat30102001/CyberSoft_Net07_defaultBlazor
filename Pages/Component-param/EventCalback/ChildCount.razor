@@ -1,0 +1,46 @@
+<button class="btn btn-outline-info" @onclick="likeActionAsync">Like</button>
+
+<br>
+<br>
+<br>
+@*  có inout nhap lieu - nhập tên => ở parent sẽ thấy "Xin chào - tên mới nhập từ input" *@
+<input type="text" class="form-control" @bind="name">
+<button class="btn btn-outline-success" @onclick="onSendMessageAsync" >Gửi</button>
+
+
+@code {
+    private string name;
+    // muốn gọi hàm của cha khi nhấn nút gửi
+    //Khai báo [parameter] để hứng
+    [Parameter]
+    public EventCallback likeAction { get; set; }
+
+    // likeAction => tạo hàm trung giam để xử lý invokeAsync
+    private async Task likeActionAsync()
+    {
+        Console.WriteLine("[CHILD] - BẮT ĐẦU");
+        @* await Task.Delay(3000);// *@
+
+        await likeAction.InvokeAsync();
+        Console.WriteLine("[CHILD] - Kết thúc");
+    }
+
+    [Parameter]
+    public EventCallback<string> onSendMessage {get; set;}
+    private async Task onSendMessageAsync(){
+        await onSendMessage.InvokeAsync(name);
+    }
+
+    @* async - await , Task
+    Task: void :
+    Task<int> :
+    async: hàm có chứa xử lý bất đồng bộ
+    await: đợi hoàn thành -> làm tiếp
+
+    
+    
+    
+    
+*@
+
+}

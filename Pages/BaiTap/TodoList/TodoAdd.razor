@@ -1,0 +1,29 @@
+@using System.Threading.Tasks
+<div class="input-group">
+
+    <input class="form-control" @bind="@name" @bind:event="oninput" @onkeydown="handleKey"/>
+
+    <button class="btn btn-primary" @onclick="AddTodoAsync">
+        Add
+    </button>
+
+</div>
+
+
+@code {
+    private string name;
+    [Parameter]
+    public EventCallback<string> AddTodo { get; set; }
+
+    private async Task AddTodoAsync()
+    {
+        await AddTodo.InvokeAsync(name);
+    }
+
+    private async Task handleKey(KeyboardEventArgs e){
+        if(e.Key =="Enter"){
+            await AddTodoAsync();
+            Console.WriteLine(name);
+        }
+    }
+}

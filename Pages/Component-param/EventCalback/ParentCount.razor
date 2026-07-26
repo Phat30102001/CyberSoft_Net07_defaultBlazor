@@ -1,0 +1,41 @@
+@page "/component/even-callback"
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-8">
+            <h3>Event callback</h3>
+            <h4>Like: @count</h4>
+
+            @* button like *@
+            @* khi truyen thong tin / funtion vafo cho component thi component đó phải hứng giá trị thông qua
+            [Parameter] *@
+            <ChildCount likeAction="InCreaseCount" onSendMessage="ReceiveName" />
+        </div>
+
+
+        <p>@message</p>
+    </div>
+</div>
+
+
+
+
+@code {
+    private int count = 0;
+    private string message;
+
+    private void InCreaseCount()
+    {
+        Console.WriteLine("[Parent] - Start");
+
+        @* await Task.Delay(2000); *@
+        count++;
+    }
+
+
+    private void ReceiveName(string name){
+        message = $"Xin chào {name}";
+    }
+
+
+}

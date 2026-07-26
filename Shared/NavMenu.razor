@@ -1,6 +1,6 @@
 @namespace buoi18.Shared
 
-<nav class="nav justify-content-center  ">
+<ul class="nav justify-content-center  ">
     @* kiem tra @page khớp với href 100% thì thêm class text-danger vào cho các navlink tuong ứng *@
     @* NavLinkMatch.All: url phải khớp toàn bộ thì mới active
     NavLinkMatch.Prefix : khớp phần đầu là được active
@@ -31,9 +31,10 @@
             >Component</NavLink>
         <div class="dropdown-menu">
             <NavLink ActiveClass="active-nav text-danger" Match="NavLinkMatch.All" class="dropdown-item" href="/component/parent">Parent</NavLink>
-        </div>
-        <div class="dropdown-menu">
+    
             <NavLink ActiveClass="active-nav text-danger" Match="NavLinkMatch.All" class="dropdown-item" href="/component/list-car">List car</NavLink>
+            <NavLink ActiveClass="active-nav text-danger" Match="NavLinkMatch.All" class="dropdown-item" href="/component/even-callback">Event callback</NavLink>
+            <NavLink ActiveClass="active-nav text-danger" Match="NavLinkMatch.All" class="dropdown-item" href="/component/ref">Ref</NavLink>
         </div>
     </li>
     @* onway *@
@@ -80,7 +81,9 @@
             >Bài tập</NavLink>
         <div class="dropdown-menu">
             <NavLink ActiveClass="active-nav text-danger" Match="NavLinkMatch.All" class="dropdown-item" href="/baitap/change-car">Change Car</NavLink>
+            <NavLink ActiveClass="active-nav text-danger" Match="NavLinkMatch.All" class="dropdown-item" href="/baitap/changebg">Change BG</NavLink>
+            <NavLink ActiveClass="active-nav text-danger" Match="NavLinkMatch.All" class="dropdown-item" href="/baitap/todo">To do</NavLink>
         </div>
     </li>
 
-</nav>
+</ul>

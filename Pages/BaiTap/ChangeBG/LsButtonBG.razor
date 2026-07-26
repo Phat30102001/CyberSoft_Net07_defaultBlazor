@@ -1,0 +1,23 @@
+
+
+<div class="row">
+    <div class="col-6">
+        @foreach(var item in ListColor){
+            <button class="btn @item.CssClass" @onclick="()=>ChangeAsync(item.CssClass)">@item.Name</button>
+        }
+    </div>
+</div>
+
+
+@code{
+    [Parameter]
+    public List<(string CssClass, string Name)> ListColor {get;set;}
+
+
+    [Parameter]
+    public EventCallback<string> Change {get;set;}
+
+    private async Task ChangeAsync(string css){
+        await Change.InvokeAsync(css);
+    }
+}

@@ -1,0 +1,61 @@
+@* cha : gọi component con để hiển thị giao diện
+
+con: có số , có button tăng giảm (state và hàm thay đổi state đều đặt ở con)
+*@
+
+@page "/component/ref"
+
+<div class="row justify-content-center">
+    <div class="col-8">
+        @* bật tham thiếu đến thằng con *@
+        <ChildRef @ref="childRef" />
+
+        <button class="btn btn-warning" @onclick="ResetChild">Reset</button>
+
+        <button class="btn btn-warning " @onclick="DecreaseChild"> Giảm</button>
+
+    </div>
+</div>
+
+@code {
+    private ChildRef? childRef;
+
+    private void ResetChild()
+    {
+        Console.WriteLine("[Parent] - start");
+        childRef?.Reset();
+        Console.WriteLine("[Parent] - start " + childRef.count);
+    }
+
+    private void DecreaseChild(){
+        childRef.Decrease();
+    }
+
+    /*
+Parent
+
+↓
+
+childRef.Reset()
+
+↓
+
+Child.Reset()
+
+↓
+
+StateHasChanged()
+
+↓
+
+Child render lại
+
+    
+    
+*/
+
+
+// KHI NÀO DUNG
+}
+
+
