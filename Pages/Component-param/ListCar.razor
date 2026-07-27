@@ -2,19 +2,23 @@
 
 
 @* hien thi ds 4 chiec xe *@
-<h1 class="text-center">LIST CAR</h1>
-<div class="row my-5">
+<div class="container">
+    <h1 class="text-center">LIST CAR</h1>
+    <div class="row my-5">
 
 
-    @foreach (var item in lstCar)
-    {
-        <div class="col-3">
-            <CarItem item="@item" changeCarItem = "changeCar" />
-        </div>
-    }
+        @foreach (var item in lstCar)
+        {
+            <div class="col-3">
+                <CarItem item="@item" changeCarItem="changeCar" addToCart="AddCart" />
+            </div>
+        }
+    </div>
+
+    <CartList lstCart="lstCart" changeQuantity="ChangeQuantity" removeCart="RemoveCart"/>
 </div>
 
-    <ModelCar car="@currentCar" />
+<ModelCar car="@currentCar" />
 
 @code {
     public CarItemVM currentCar = null;
@@ -25,6 +29,12 @@
         new CarItemVM("Ô tô silver",20000,"CarBasic/products/silver-car.jpg","Xe ô tô màu đen"),
         new CarItemVM("Ô tô steel",20000,"CarBasic/products/steel-car.jpg","Xe ô tô màu đen"),
         };
+    // ds gio hàng
+    // mock data de test UI
+    private List<CarItemCartVM> lstCart = new List<CarItemCartVM>(){
+        new CarItemCartVM("Ô tô black",20000,"CarBasic/products/black-car.jpg","Xe ô tô màu đen"),
+        new CarItemCartVM("Ô tô red",20000,"CarBasic/products/red-car.jpg","Xe ô tô màu đen")
+        };
 
     // ham thay doi currencar
     public void changeCar(CarItemVM newCar)
@@ -32,5 +42,37 @@
         currentCar = newCar;
     }
 
+    private void AddCart(CarItemCartVM item)
+    {
+        // boor sung kiem tra xem la co chua, cos thif tang sl
+        // chua thi addd
+        var find = lstCart.Find(a => a.Name == item.Name);
+
+        if (find == null)
+        {
+
+            lstCart.Add(item);
+        } else{
+            find.Quantity++;
+        }
+    }
+    // tăng , giảm , xoá sp khỏi giỏ hàng
+    private void ChangeQuantity((CarItemCartVM item, int number) data){
+        Console.WriteLine(data.item.Name);
+        Console.WriteLine(data.item.Quantity);
+        Console.WriteLine(data.number);
+        // -1, 1
+        if(data.number == -1 && data.item.Quantity == 1){
+            RemoveCart(data.item);
+            return; // kết thúc hàm
+        }
+        data.item.Quantity += data.number;
+
+        @* quantity  + 1 *@
+        @* quantity  +  - 1 => quantity - 1*@
+    }
+    private void RemoveCart(CarItemCartVM item){
+        lstCart.Remove(item);
+    }
     
 }

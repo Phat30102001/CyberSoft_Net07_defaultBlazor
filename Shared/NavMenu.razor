@@ -85,5 +85,21 @@
             <NavLink ActiveClass="active-nav text-danger" Match="NavLinkMatch.All" class="dropdown-item" href="/baitap/todo">To do</NavLink>
         </div>
     </li>
+    @* /lifecycle *@
+     <li class="nav-item dropdown">
+        <NavLink
+        ActiveClass="active-nav text-danger" Match="NavLinkMatch.Prefix"
+            class="nav-link dropdown-toggle"
+            data-bs-toggle="dropdown"
+            href="/lifecycle"
+            role="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+            >lifecycle</NavLink>
+        <div class="dropdown-menu">
+            <NavLink ActiveClass="active-nav text-danger" Match="NavLinkMatch.All" class="dropdown-item" href="/lifecycle/first">First</NavLink>
+            
+        </div>
+    </li>
 
 </ul>

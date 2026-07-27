@@ -1,0 +1,68 @@
+@page "/lifecycle/first"
+@using System.Net.Http.Json
+
+@* để dùng dc những các mình DI thì *@
+@inject HttpClient _httpClient
+
+
+<div class="container">
+    <p>@message</p>
+
+
+    <div class="row">
+        @foreach (var item in dsprod)
+        {
+            <div class="col-3">
+                <div class="card text-start">
+                    <img class="card-img-top" src="@item.Img" alt="Title" />
+                    <div class="card-body">
+                        <h4 class="card-title">@item.Name</h4>
+                        <p class="card-text">@item.Price</p>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>
+
+
+
+
+@code {
+    private string message = "HIHI";
+
+    private List<ProductDto> dsprod = new List<ProductDto>();
+    @* OnInitialized() và OnInitializedAsync() : gọi 1 lần duy nhất khi component được khởi tạo *@
+    protected override void OnInitialized()
+    {
+        Console.WriteLine("[OnInitialized] - start");
+        message = "Hello Cybersoft - NET 07";
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        //
+        Console.WriteLine("[OnInitializedAsync] - start loading");
+
+        @* await Task.Delay(1000); *@
+        // gọi api bằng httpClient
+        dsprod = await _httpClient.GetFromJsonAsync<List<ProductDto>>("https://svcy.myclass.vn/api/ProductApi/getall");
+
+        /*
+        JsonSerializer.Deserialize<List<ProductDto>>(
+        json,
+        new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        });
+        id , ID, Id, iD => Id
+        
+        */
+
+
+
+        Console.WriteLine("số lượng prod từ api" + dsprod.Count);
+        Console.WriteLine("[OnInitializedAsync] - done");
+
+    }
+}

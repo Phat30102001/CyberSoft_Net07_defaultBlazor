@@ -23,7 +23,7 @@
     aria-hidden="true"
 >
     <div
-        class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm"
+        class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl"
         role="document"
     >
         <div class="modal-content">
@@ -39,7 +39,14 @@
                 ></button>
             </div>
             <div class="modal-body">
-                <img src="@car?.Image" alt="">
+                <img class="w-100" src="@car?.Image" alt="">
+
+                <div class="car-info">
+                    @* optional - có thể null *@
+                    <p>Name : @car?.Name</p> 
+                    <p>Price : @car?.Price</p>
+                    <p>Description : @car?.Description</p>
+                </div>
             </div>
             <div class="modal-footer">
                 <button

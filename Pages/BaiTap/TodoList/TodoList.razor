@@ -16,10 +16,10 @@ button ADD
     <TodoAdd AddTodo="AddTodo" />
     @foreach (TodoVM item in todoLst)
     {
-    <div class="d-flex align-items-center mb-2">
-            <input class="form-check-input" type="checkbox" checked="@item.Status" @onchange="() => CheckTask(item)" />
+    <div class="d-flex align-items-center mb-2 ">
+            <input class="form-check-input me-3" type="checkbox" checked="@item.Status" @onchange="() => CheckTask(item)" />
 
-            <label class="form-check-label">
+            <label class="form-check-label me-3">
                 @item.Name
             </label>
 

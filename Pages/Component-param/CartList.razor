@@ -1,0 +1,57 @@
+    @* DS GIO HANG *@
+    <h3>List Cart (@lstCart.Sum(a=>a.Quantity))</h3>
+
+    <table class="table ">
+        <tr>
+            <th>STT</th>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+            <th>Action</th>
+        </tr>
+        @for (int i = 0; i < lstCart.Count; i++)
+        {
+            // i=0 => chạy, tăng i =1
+            // i = 1 => chạy tăng i =2
+            // i=2 => khong
+
+            var item = lstCart[i];
+            <tr>
+                <td>@(i + 1)</td>
+                <td><img width="100px" height="100px" src="@lstCart[i].Image" alt=""></td>
+                <td>@lstCart[i].Name</td>
+                <td class="d-flex justify-content-between">
+                    <button class="btn btn-outline-primary" @onclick="() => changeQuantityAsync(item,-1)">-</button>
+                    <span>@lstCart[i].Quantity</span>
+                    <button class="btn btn-outline-primary" @onclick="() => changeQuantityAsync(item,1)">+</button>
+                </td>
+                <td>@lstCart[i].Price</td>
+                <td>@(lstCart[i].Price *lstCart[i].Quantity) </td>
+                <td><button class="btn btn-outline-danger" @onclick="()=>removeCartAsync(item)">delete</button></td>
+            </tr>
+        }
+
+    </table>
+
+    @code {
+        [Parameter]
+        public List<CarItemCartVM> lstCart {get;set;}
+
+        [Parameter]
+        public EventCallback<(CarItemCartVM,int)> changeQuantity {get; set;}
+        [Parameter]
+        public EventCallback<CarItemCartVM> removeCart {get; set;}
+
+        private async Task changeQuantityAsync(CarItemCartVM item, int number){
+                    Console.WriteLine(item.Name);
+                    Console.WriteLine(number);
+
+            await changeQuantity.InvokeAsync((item,number));
+        }
+        private async Task removeCartAsync(CarItemCartVM item){
+            await removeCart.InvokeAsync(item);
+        }
+
+    }

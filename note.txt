@@ -57,3 +57,9 @@ EVENT CALLBACK
 REF
     - cha cần điều khiển , can thiệp vào state/nội bộ  của thằng con
     - khi có thay đổi state thì nhớ StateHasChanged vì sự kiện gọi ở cha -> khác lifecycle nên cần thông báo
+
+
+Async await TAsk
+    - code bất đồng bộ
+Task và Task<T> : KDL đại diện cho tác vụ chyaj bdb
+    // giống promise : 

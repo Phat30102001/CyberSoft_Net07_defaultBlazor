@@ -12,6 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
+// HTTPCLIENT
+builder.Services.AddHttpClient();
+
 // Đăng kí các dịch vụ 
 var app = builder.Build();
 

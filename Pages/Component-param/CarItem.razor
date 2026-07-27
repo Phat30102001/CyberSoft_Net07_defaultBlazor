@@ -13,16 +13,11 @@
             <p class="card-text">@item.Description - @item.Price</p>
             <button class = "btn btn-outline-primary "
              @onclick  = '()=> changeCarItem.InvokeAsync(item)'
-             data-bs-toggle="modal" data-bs-target="#modalId">View detail modal</button>
+             data-bs-toggle="modal" data-bs-target="#modalId">View</button>
+            <button class = "btn btn-outline-secondary " @onclick="addToCartAsync"> Add ro cart
+            </button>
         </div>
     </div>
-    
-
-    @*  *@
-
-
-
-
 
 @*  model car (Name, Price, Image, Desc) *@
 @code{
@@ -34,5 +29,12 @@
     @* Func<>
     Action<> *@
     public EventCallback<CarItemVM> changeCarItem {get; set;}
+
+    [Parameter]
+    public EventCallback<CarItemCartVM> addToCart {get;set;}
+    public async Task addToCartAsync(){
+        var itemCart = new CarItemCartVM(item.Name,item.Price, item.Image, item.Description);
+        await addToCart.InvokeAsync(itemCart);
+    }
 
 }
