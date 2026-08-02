@@ -1,5 +1,6 @@
 @page "/lifecycle/first"
 @using System.Net.Http.Json
+@inject NavigationManager _nav
 
 @* để dùng dc những các mình DI thì *@
 @inject HttpClient _httpClient
@@ -8,7 +9,7 @@
 <div class="container">
     <p>@message</p>
 
-
+    <Param_Prod_Detail prod="@currentProd"/>
     <div class="row">
         @foreach (var item in dsprod)
         {
@@ -19,6 +20,13 @@
                         <h4 class="card-title">@item.Name</h4>
                         <p class="card-text">@item.Price</p>
                     </div>
+                    <div class="card-footer">
+                        <button class="btn btn-outline-primary"
+                        @onclick="()=>goToDetail(item.Id)"
+                        >View</button>
+                        <button class="btn btn-outline-success"  @onclick="()=>selectProduct(item)"
+                        >quick view</button>
+                    </div>
                 </div>
             </div>
 
@@ -26,11 +34,13 @@
     </div>
 </div>
 
-
-
-
 @code {
     private string message = "HIHI";
+    private ProductDto? currentProd = new ProductDto();
+
+    private void selectProduct(ProductDto item){
+        currentProd = item;
+    }
 
     private List<ProductDto> dsprod = new List<ProductDto>();
     @* OnInitialized() và OnInitializedAsync() : gọi 1 lần duy nhất khi component được khởi tạo *@
@@ -65,4 +75,21 @@
         Console.WriteLine("[OnInitializedAsync] - done");
 
     }
+
+    @* hàm điều hướng *@
+    private void goToDetail(string id){
+        _nav.NavigateTo($"/lifecycle/first/{id}");
+    }
 }
+
+
+@* httpclient và các phương thức http 
+RESTFULL api
+GET:    lấy dữ liệu 
+POST:   thêm dữ liệu / gửi thông tin
+PUT:    sửa dữ liệu / gửi thông tin
+DELETE: xoá 
+PATCH:  sửa 1 phần dữ liệu
+
+
+*@

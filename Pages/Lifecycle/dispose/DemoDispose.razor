@@ -1,0 +1,42 @@
+@page "/lifecycle/dispose"
+@using System.Threading
+@implements IDisposable
+
+
+<div class="container">
+    <h3>demo dispose</h3>
+
+    <p><b>Count: </b>@count</p>
+</div>
+
+
+@code {
+    private int count = 0;
+    Timer timer;
+
+
+    // vừa vào component này thì cho nó tạo luồng mới
+    protected override void OnInitialized()
+    {
+        Console.WriteLine("Component Created");
+
+        // khi new thì tạo thêm 1 luồn
+        timer = new Timer((statte) =>
+        {
+            Console.WriteLine($"Timer: {DateTime.Now:HH:mm:ss}");
+
+            count++;
+            InvokeAsync(StateHasChanged);
+        }, null, 0, 1000);
+    }
+
+// khi qua / khác
+// khi compoent không hiển thị nữa
+    public void Dispose()
+    {
+        Console.WriteLine("Timer Dispose");
+
+        timer.Dispose();
+    }
+
+}

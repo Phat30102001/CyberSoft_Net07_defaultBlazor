@@ -122,8 +122,32 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvSW5mb3IucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/phuongnga/Documents/Cybersoft_class/NET07/B18/buoi18/Pages/Lifecycle/dispose/DemoDispose.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvTGlmZWN5Y2xlL2Rpc3Bvc2UvRGVtb0Rpc3Bvc2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/phuongnga/Documents/Cybersoft_class/NET07/B18/buoi18/Pages/Lifecycle/FirstLifecycle.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvTGlmZWN5Y2xlL0ZpcnN0TGlmZWN5Y2xlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/phuongnga/Documents/Cybersoft_class/NET07/B18/buoi18/Pages/Lifecycle/Param_Prod_Detail.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvTGlmZWN5Y2xlL1BhcmFtX1Byb2RfRGV0YWlsLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/phuongnga/Documents/Cybersoft_class/NET07/B18/buoi18/Pages/Lifecycle/ProductParam.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvTGlmZWN5Y2xlL1Byb2R1Y3RQYXJhbS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/phuongnga/Documents/Cybersoft_class/NET07/B18/buoi18/Pages/Lifecycle/Render/DemoRender.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvTGlmZWN5Y2xlL1JlbmRlci9EZW1vUmVuZGVyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/phuongnga/Documents/Cybersoft_class/NET07/B18/buoi18/Pages/Lifecycle/SetParameters/Child_SetParam.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvTGlmZWN5Y2xlL1NldFBhcmFtZXRlcnMvQ2hpbGRfU2V0UGFyYW0ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/phuongnga/Documents/Cybersoft_class/NET07/B18/buoi18/Pages/Lifecycle/SetParameters/Parent_SetParam.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvTGlmZWN5Y2xlL1NldFBhcmFtZXRlcnMvUGFyZW50X1NldFBhcmFtLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/phuongnga/Documents/Cybersoft_class/NET07/B18/buoi18/Pages/Oneway-binding/BindingProduct.razor]

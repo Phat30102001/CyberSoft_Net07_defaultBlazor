@@ -63,3 +63,30 @@ Async await TAsk
     - code bất đồng bộ
 Task và Task<T> : KDL đại diện cho tác vụ chyaj bdb
     // giống promise : 
+
+
+Lifecycle
+- Oninit : OnInitialized / OnInitializedAsync 
+    - khi component vừa được khởi tạo 
+
+- Parram
+    - SetParametersAsync 
+        -  trước khi OnParametersSet, khi Blazor chuẩn bị gán các parameter cho component
+        - dungf khi muoons cna thiep thy doi thong tin param
+    - OnParametersSet / OnParametersSetAsync
+        - Là lifecycle method chạy sau khi các parameter đã được gán giá trị.
+        - Được gọi mỗi lần cha truyền giá trị mới cho component con, hoặc khi component con được khởi tạo.
+        - Thường dùng để xử lý logic phụ thuộc vào giá trị parameter (ví dụ: load dữ liệu, tính toán lại...).
+- Render
+    - ShouldRender: quyết định có render hay không
+        - Được gọi mỗi lần component chuẩn bị render.
+        - return true false để quyết định
+        - kiểm soat hiệu năng , chặn render không cần thiết
+    - OnAfterRender/OnAfterRenderAsync: sau khi đã có giao diện (dã render)
+        - Được gọi ngay sau khi component đã render xong UI lên DOM (hậu render)
+        - kết hợp js 
+        - có tham số first render 
+- dispose
+    - chạy trước khi tời khỏi component
+
+- SetParametersAsync -> OnInitialized -> OnParametersSet -> ShouldRender ----true--> Render ---> OnAfterRender ---> prram thay đổi ---> OnParametersSet --> ShouldRender ---> rời đi --> dispose

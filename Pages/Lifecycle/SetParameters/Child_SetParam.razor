@@ -1,0 +1,50 @@
+<div>
+    <b>Name: </b>@dto.name
+</div>
+
+@code {
+    [Parameter]
+    public NameDto dto { get; set; }
+
+
+    protected override void OnInitialized()
+    {
+        Console.WriteLine("[OnInitialized]");
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine("[OnInitializedAsync]");
+    }
+    // SetParametersAsync:
+    // chạy trước khi render giao diện
+    // vừa khởi tạo
+    // khi tham so thay doi
+
+    // can thiệp sâu vào quá trình tuyền param
+    public override async Task SetParametersAsync(ParameterView parameters)
+    {
+        Console.WriteLine("[SetParametersAsync]");
+        // trước khi gán giá trị cho ten
+        //
+        NameDto oldName = parameters.GetValueOrDefault<NameDto>("dto");
+
+       
+        if (oldName.name == "helo")
+        {
+            oldName.name = "hi"; // thy đổi param trước khi truyền đến thằng con
+        }
+        await base.SetParametersAsync(parameters);
+
+    }
+    // sau khi nhận được param
+    // chạy sau khi nhận param
+    // vừa khởi tạo
+    // khi tham so thay doi
+    protected override void OnParametersSet()
+    {
+        Console.WriteLine("[OnParametersSet] - sau khi nhận được param");
+        // goi api
+    }
+
+
+}

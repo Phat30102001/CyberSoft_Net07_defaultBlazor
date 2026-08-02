@@ -1,0 +1,44 @@
+@page "/lifecycle/render"
+<div class="container">
+    <h3>Demo Render & Hậu Render</h3>
+    <input type="text" @bind="message">
+    <p><b>Thông báo: </b> @message</p>
+    <p><b>Số lần render UI: </b> @countRender</p>
+    <button class="btn btn-outline-info" @onclick="ChangeMess">Đổi thông báo</button>
+</div>
+
+@code {
+    public string message = "Welcome";
+    public string oldMessage;
+    public int countRender = 1;
+    private void ChangeMess()
+    {
+        message = "Welcomee";
+    }
+    protected override bool ShouldRender()
+    {
+
+        Console.WriteLine("[ShouldRender]");
+
+        if (message != oldMessage)
+        {
+            countRender++;
+            return true;
+        }
+        return false;// không render
+    }
+    protected override void OnAfterRender(bool first)
+    {
+        // sau khi render xong thi update lại oldmesss
+        oldMessage = message;
+        if (first)
+        {
+            Console.WriteLine("[OnAfterRender] - render lần đầu");
+        }
+        else
+        {
+            Console.WriteLine($"[OnAfterRender] - render lần thứ {countRender}");
+
+        }
+    }
+}
