@@ -1,0 +1,129 @@
+@page "/baitap/student-manager"
+@using System.Net.Http.Json
+@using buoi18.Services
+<PageTitle>Quản lý sinh viên</PageTitle>
+@inject HttpClient _http
+
+@inject IStudentApiService _studentApi
+
+
+<div class="container py-4">
+    <h1 class="mb-4 text-center">Quản lý sinh viên</h1>
+    @if(message != null && message != ""){
+        // mafu xanh laf thanh , do la that bai , 
+        <div class="alert @(hasErorr ? "alert-danger":"alert-success")">@message</div>
+    }
+    @* studentform *@
+    <div class="card mb-4">
+        <div class="card-header fw-bold">
+            <h5 class="mb-0">Thêm sinh viên</h5>
+        </div>
+        <div class="card-body">
+            @* form *@
+            <StudentForm OnSubmit="SaveAsync" StudentToEdit="studentEdit" ResetForm="ResetForm"/>
+        </div>
+    </div>
+    @* studentlist *@
+    <div class="card">
+        <div class="card-header fw-bold">Danh sách sinh viên</div>
+        <div class="card-body">
+            @* list *@
+            <StudentList Students="@students" OnEdit="BeginEdit" OnDelete="DeleteAsync"/>
+        </div>
+    </div>
+
+</div>
+
+@code {
+    private string message = "";
+    private StudentDto studentEdit;
+    private bool hasErorr = false;
+    private List<StudentDto> students = new List<StudentDto>();
+        @* {
+        new StudentDto(){MaSV="SV001", HoTen="Nguyễn Văn A", Email="", SoDT="0123456789", CMND="123456789", DiemToan=8.5, DiemLy=7.0, DiemHoa=9.0},
+        new StudentDto(){MaSV="SV002", HoTen="Trần Thị B", Email="", SoDT="0987654321", CMND="987654321", DiemToan=6.5, DiemLy=8.0, DiemHoa=7.5},
+        new StudentDto(){MaSV="SV003", HoTen="Lê Văn C", Email="", SoDT="0123456789", CMND="123456789", DiemToan=9.0, DiemLy=8.5, DiemHoa=9.5}}; *@
+
+        @* OnInitializedAsync *@
+        // Lifecycle: chỉ tải danh sách khi component được khởi tạo.
+
+        protected override async Task OnInitializedAsync()
+        {
+            await LoadStudentsAsync();
+        }
+
+
+        // ham load du lieu tu server/api
+        private async Task LoadStudentsAsync(){
+            @*  dungf httpclient *@
+            @*  url : https://svcy.myclass.vn/api/SinhVien/LayDanhSachSinhVien *@
+            students = await _http.GetFromJsonAsync<List<StudentDto>>("https://svcy.myclass.vn/api/SinhVien/LayDanhSachSinhVien");
+            students.Reverse();
+
+
+        }
+    
+        // ham them sinh vien moi
+        private async Task SaveAsync(StudentDto newStudent){
+                bool isEdit = studentEdit != null && studentEdit.MaSV == newStudent.MaSV;
+                var response = new HttpResponseMessage();
+                Console.WriteLine(isEdit ? "Cập nhật sinh viên: " : "Thêm sinh viên: " );
+                Console.WriteLine(newStudent.HoTen);
+                if(isEdit){
+                    response = await _http.PutAsJsonAsync("https://svcy.myclass.vn/api/SinhVien/CapNhatThongTinSinhVien", newStudent);
+                } else{
+                    // them moi
+                     response = await _studentApi.AddAsync(newStudent);
+
+                }
+
+
+            if(response.IsSuccessStatusCode){
+                @*  goi api thanh cong *@
+                Console.WriteLine(isEdit ? "Cập nhật sinh viên thành công." : "Thêm sinh viên thành công.");
+                message = isEdit ? "Cập nhật sinh viên thành công." : "Thêm sinh viên thành công.";
+                hasErorr = false;
+                studentEdit = null;
+                await LoadStudentsAsync();
+            }
+            else{
+                @*  goij api that bai *@
+                Console.WriteLine("Lỗi khi thêm sinh viên: " + response.ReasonPhrase);
+                message = "Lỗi khi thêm/sửa sinh viên: " + response.ReasonPhrase;
+                hasErorr = true;
+            }
+
+        }
+        // xoas
+        private async Task DeleteAsync(string maSV){
+            var response = await _http.DeleteAsync($"https://svcy.myclass.vn/api/SinhVien/XoaSinhVien/{maSV}");
+            if(response.IsSuccessStatusCode){
+                await LoadStudentsAsync();
+
+                Console.WriteLine("Xóa sinh viên thành công.");
+                message = "Xóa sinh viên thành công.";
+                hasErorr = false;
+            } else{
+                Console.WriteLine("Lỗi khi xóa sinh viên: " + response.ReasonPhrase);
+                message = "Lỗi khi xóa sinh viên: " + response.ReasonPhrase;
+                hasErorr = true;
+            }
+        }
+       
+        private void ResetMessage()
+        {
+            message = "";
+            hasErorr = false;
+        }
+        private void ResetForm()
+        {
+            studentEdit = null;
+            ResetMessage();
+        }
+        private void BeginEdit(StudentDto student)
+        {
+            ResetMessage();
+            studentEdit = student;
+        }
+
+}

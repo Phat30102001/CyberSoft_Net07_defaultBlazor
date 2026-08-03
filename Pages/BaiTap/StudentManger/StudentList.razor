@@ -1,0 +1,71 @@
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Mã sinh viên</th>
+                <th>Họ tên</th>
+                <th>Email</th>
+                <th>Số điện thoại</th>
+                <th>CMND/CCCD</th>
+                <th>Điểm toán</th>
+                <th>Điểm lý</th>
+                <th>Điểm hóa</th>
+                <th>Điểm trung bình</th>
+                <th>_</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Students != null && Students.Count > 0)
+            {
+                @foreach (var student in Students)
+                {
+                    <tr>
+                        <td>@student.MaSV</td>
+                        <td>@student.HoTen</td>
+                        <td>@student.Email</td>
+                        <td>@student.SoDT</td>
+                        <td>@student.CMND</td>
+                        <td>@student.DiemToan</td>
+                        <td>@student.DiemLy</td>
+                        <td>@student.DiemHoa</td>
+                        <td></td>
+                        <td class="text-nowrap">
+                            <button class="btn btn-sm btn-warning"
+                            @onclick="() => EditStudent(student)"
+                            >Sửa</button>
+                            <button class="btn btn-sm btn-danger" 
+                            @onclick="()=>DeleteStudent(student.MaSV)">Xoá</button>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="10" class="text-center">Không có dữ liệu sinh viên.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+@code {
+    [Parameter]
+    public List<StudentDto> Students { get; set; }
+
+    [Parameter]
+    public EventCallback<StudentDto> OnEdit { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnDelete { get; set; }  
+
+    private async Task EditStudent(StudentDto student)
+    {
+        await OnEdit.InvokeAsync(student);
+    }
+
+    private async Task DeleteStudent(string studentId)
+    {
+        await OnDelete.InvokeAsync(studentId);
+    }
+}

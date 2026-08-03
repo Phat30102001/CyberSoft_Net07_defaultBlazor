@@ -1,4 +1,5 @@
 
+using buoi18.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +15,9 @@ builder.Services.AddServerSideBlazor();
 
 // HTTPCLIENT
 builder.Services.AddHttpClient();
+
+//  DI SERVICES
+builder.Services.AddScoped<IStudentApiService, StudentApiService>();
 
 // Đăng kí các dịch vụ 
 var app = builder.Build();

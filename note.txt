@@ -87,6 +87,7 @@ Lifecycle
         - kết hợp js 
         - có tham số first render 
 - dispose
+    - Phải implement Idisposable
     - chạy trước khi tời khỏi component
 
 - SetParametersAsync -> OnInitialized -> OnParametersSet -> ShouldRender ----true--> Render ---> OnAfterRender ---> prram thay đổi ---> OnParametersSet --> ShouldRender ---> rời đi --> dispose

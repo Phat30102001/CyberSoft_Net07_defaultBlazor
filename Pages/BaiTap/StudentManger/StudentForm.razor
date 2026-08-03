@@ -1,0 +1,125 @@
+@using System.Text.Json
+<EditForm model="formModel" OnValidSubmit="SubmitAsync">
+    @* OnValidSubmit: goij hafm khi ddunsg *@
+    @* OnInValidSubmit: goij hafm khi sai *@
+    <DataAnnotationsValidator />
+    <div class="row g-3">
+        <div class="col-md-4">
+            <label for="maSinhVien" class="form-label">Mã sinh viên</label>
+            <input id="maSinhVien" type="text" class="form-control" @bind="formModel.MaSV" disabled="@isEditing" />
+            <ValidationMessage For="@(() => formModel.MaSV)" />
+        </div>
+        <div class="col-md-4">
+            <label for="hoTen" class="form-label">Họ tên</label>
+            <input id="hoTen" type="text" class="form-control" @bind="formModel.HoTen">
+            <ValidationMessage For="@(() => formModel.HoTen)" />
+        </div>
+        <div class="col-md-4">
+            <label for="email" class="form-label">Email</label>
+            <input id="email" class="form-control" @bind="formModel.Email" />
+            <ValidationMessage For="@(() => formModel.Email)" />
+        </div>
+        <div class="col-md-4">
+            <label for="sdt" class="form-label">Số điện thoại</label>
+            <input id="sdt" class="form-control" @bind="formModel.SoDT" />
+            <ValidationMessage For="@(() => formModel.SoDT)" />
+        </div>
+        <div class="col-md-4">
+            <label for="cccd" class="form-label">CMND/CCCD</label>
+            <input id="cccd" class="form-control" @bind="formModel.CMND" />
+            <ValidationMessage For="@(() => formModel.CMND)" />
+        </div>
+        <div class="col-md-4">
+            <label for="dt" class="form-label">Điểm toán</label>
+            <input id="dt" class="form-control" @bind="formModel.DiemToan" />
+            <ValidationMessage For="@(() => formModel.DiemToan)" />
+        </div>
+        <div class="col-md-4">
+            <label for="dl" class="form-label">Điểm lý</label>
+            <input id="dl" class="form-control" @bind="formModel.DiemLy" />
+            <ValidationMessage For="@(() => formModel.DiemLy)" />
+        </div>
+        <div class="col-md-4">
+            <label for="dh" class="form-label">Điểm hóa</label>
+            <input id="dh" class="form-control" @bind="formModel.DiemHoa" />
+            <ValidationMessage For="@(() => formModel.DiemHoa)" />
+        </div>
+
+    </div>
+    <div class="mt-3 d-flex gap-2">
+        <button class="btn btn-primary" type="submit">
+            @(isEditing ? "Cập nhật" : "Thêm")
+        </button>
+        
+        <button class="btn btn-secondary" type="button" 
+        @onclick="ClearForm">@(isEditing? "Huỷ":"Reset")</button>
+    </div>
+</EditForm>
+
+
+@code {
+    private StudentDto formModel = new StudentDto();
+
+    private bool isEditing => StudentToEdit != null;
+
+    [Parameter]
+    public EventCallback<StudentDto> OnSubmit { get; set; }
+    
+    [Parameter]
+    public EventCallback ResetForm { get; set; }
+
+    [Parameter]
+    public StudentDto StudentToEdit { get; set; }
+    // id cũ để kiểm tra xem có cần reset form hay không
+    private string? loadedStudentId;
+
+
+    protected override void OnParametersSet()
+    {
+        //
+        Console.WriteLine("[OnParametersSet] - StudentToEdit: " + JsonSerializer.Serialize(StudentToEdit));
+        if (StudentToEdit != null && StudentToEdit.MaSV != loadedStudentId)
+        {
+            formModel = new StudentDto
+            {
+                MaSV = StudentToEdit.MaSV,
+                HoTen = StudentToEdit.HoTen,
+                Email = StudentToEdit.Email,
+                SoDT = StudentToEdit.SoDT,
+                CMND = StudentToEdit.CMND,
+                DiemToan = StudentToEdit.DiemToan,
+                DiemLy = StudentToEdit.DiemLy,
+                DiemHoa = StudentToEdit.DiemHoa
+            };
+            loadedStudentId = StudentToEdit.MaSV;
+
+        }
+    }
+    @* protected override bool ShouldRender()
+    {
+        if(StudentToEdit != null  && StudentToEdit.MaSV != loadedStudentId)
+        {
+            return true;
+        }
+        return true;
+    } *@
+    private async Task SubmitAsync()
+    {
+        Console.WriteLine("[SUBMIT] - Thêm sinh viên thành công!");
+        Console.WriteLine("[SUBMIT] - Dữ liệu sinh viên: " + JsonSerializer.Serialize(formModel));
+
+        await OnSubmit.InvokeAsync(formModel);
+
+        // clear form sau khi submit
+        ClearForm();
+
+    }
+    private void ClearForm()
+    {
+        formModel = new StudentDto();
+        loadedStudentId = null;
+        ResetForm.InvokeAsync();
+    }
+
+}
+
