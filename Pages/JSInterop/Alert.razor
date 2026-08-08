@@ -1,0 +1,45 @@
+@page "/jsinterop/alert"
+<PageTitle>JS Interop - Alert</PageTitle>
+
+@* IJSRuntime được blazor DI sẵn nên chỉ việc sử dụng thôi *@
+@inject IJSRuntime js
+
+<div class="container py-4 mx-auto">
+    <h3>Demo 1: Hello JS</h3>
+    <p>C# gọi hàm JavaScript <code>window.showAlert</code>.</p>
+    <button class="btn btn-primary" @onclick="ShowAlert" >Hiện Alert</button>
+
+
+    <br>
+    <hr width="80%">
+    <h3>Demo 2: Confirm</h3>
+
+    <p>Sản phẩm giả lập : <b>@(hasItem ? "Lap Top" : "Đã xoá")</b></p>
+    <button class="btn btn-primary" @onclick="ShowConfirm" >Xoá</button>
+
+    @if(!string.IsNullOrWhiteSpace(message)){
+        <div class="alert alert-info mt-3">@message</div>
+    }
+</div>
+
+@code{
+    private string message="";
+    private bool hasItem = true;
+    @*  demo1 : alert *@
+    private async Task ShowAlert(){
+        // foij js va chayj js de alert
+        await js.InvokeVoidAsync("showAlert");
+    }
+
+    @*  demo 2 Confirm *@
+    private async Task ShowConfirm(){
+        var result = await js.InvokeAsync<bool>("showConfirm");
+        Console.WriteLine(result);
+        if(result){
+            hasItem = false;
+            message="Đã xoá!";
+        } else{
+            message = "Người dùng chọn cancel, không làm gì.";
+        }
+    }
+}

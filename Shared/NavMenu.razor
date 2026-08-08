@@ -105,5 +105,36 @@
             
         </div>
     </li>
+    @* /jsinterop *@
+     <li class="nav-item dropdown">
+        <NavLink
+        ActiveClass="active-nav text-danger" Match="NavLinkMatch.Prefix"
+            class="nav-link dropdown-toggle"
+            data-bs-toggle="dropdown"
+            href="/jsinterop"
+            role="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+            >js interop</NavLink>
+        <div class="dropdown-menu">
+            <NavLink ActiveClass="active-nav text-danger" Match="NavLinkMatch.All" class="dropdown-item" href="/jsinterop/alert">Alert</NavLink>
+            <NavLink ActiveClass="active-nav text-danger" Match="NavLinkMatch.All" class="dropdown-item" href="/jsinterop/clipboard">Clipboard</NavLink>
+        </div>
+    </li>
+    @* /signalr *@
+     <li class="nav-item dropdown">
+        <NavLink
+        ActiveClass="active-nav text-danger" Match="NavLinkMatch.Prefix"
+            class="nav-link dropdown-toggle"
+            data-bs-toggle="dropdown"
+            href="/signalr"
+            role="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+            >SignalR</NavLink>
+        <div class="dropdown-menu">
+            <NavLink ActiveClass="active-nav text-danger" Match="NavLinkMatch.All" class="dropdown-item" href="/signalr/counter">Counter</NavLink>
+        </div>
+    </li>
 
 </ul>

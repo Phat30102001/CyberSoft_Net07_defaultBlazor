@@ -91,3 +91,16 @@ Lifecycle
     - chạy trước khi tời khỏi component
 
 - SetParametersAsync -> OnInitialized -> OnParametersSet -> ShouldRender ----true--> Render ---> OnAfterRender ---> prram thay đổi ---> OnParametersSet --> ShouldRender ---> rời đi --> dispose
+
+
+
+
+// lưu local 
+user đăng nhập FB -> xử ở be FB -> token  -> lần sau quay lại web   FE lấy token -> BE FB -> vào fb không login 
+
+// JS interop
+
+
+// SIGNALR
+gửi dữ liệu / thông báo đến cho clienttneilc ngay khi có thay đổi
+không cần refesh

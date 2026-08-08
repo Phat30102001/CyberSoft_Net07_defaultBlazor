@@ -1,0 +1,53 @@
+@page "/jsinterop/clipboard"
+<PageTitle>JS Interop - clipboard</PageTitle>
+
+@* IJSRuntime được blazor DI sẵn nên chỉ việc sử dụng thôi *@
+@inject IJSRuntime js
+
+<div class="container py-4 mx-auto">
+    <h3>Demo3: JS Interop - clipboard</h3>
+
+    <span>infor@cybersoft.edu.vn</span>
+    <button class="btn btn-outline-primary btn-sm" @onclick='() => Copy("infor@cybersoft.edu.vn")'>Copy email</button>
+    <br>
+    <span class="text-success">@message</span>
+    <br>
+    <hr>
+    <h3>Demo4: JS Interop - local</h3>
+    <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="darkMode" checked="@isDark" @onchange="ChangeTheme" />
+        <label class="form-check-label" for="darkMode">Dark mode</label>
+    </div>
+</div>
+
+
+@code {
+    private string message;
+    private bool isDark = false;
+
+    private async Task ChangeTheme(ChangeEventArgs args)
+    {
+        await js.InvokeVoidAsync("setDarkMode", (bool)args.Value);
+    }
+
+    private async Task Copy(string value)
+    {
+        Console.WriteLine("Email: " + value);
+
+        await js.InvokeVoidAsync("copyText", value);
+        message = $"Đã copy {value}";
+    }
+
+    // goij js để lấy ra trạng thái dark-mode
+    // cần có html thì mới dùng js để changetheme -> afterrender
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        // chỉ chạy nếu là sau lần render đầu
+        if(!firstRender) return;
+
+        isDark = await js.InvokeAsync<bool>("getDarkMode");
+        // gọi hàm setDarkMode để active lại UI cho đúng gía trị trong param
+        await js.InvokeVoidAsync("setDarkMode",isDark);
+        StateHasChanged();
+    }
+}

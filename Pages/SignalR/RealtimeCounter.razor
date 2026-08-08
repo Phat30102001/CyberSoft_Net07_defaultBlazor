@@ -1,0 +1,25 @@
+@page "/signalr/counter"
+<PageTitle>SignalR Realtime Counter</PageTitle>
+
+<div class="container py-4">
+    <h1>Demo Realtime Counter</h1>
+    <div class="alert @(connected ? "alert-success" : "alert-secondary")">
+        Trạng thái : <b>@(connected ? "Connected" : "Disconnected")</b>
+    </div>
+    <section class="card p-4">
+        <div class="display-4">@votes</div>
+        <button class="btn btn-success mt-2" @onclick="Vote" disabled=@(!connected)>Vote</button>
+        <small class="d-block mt-2">Mở hai trình duyệt, click một bên và quan sát bên còn lại.</small>
+    </section>
+
+</div>
+
+@code {
+    private bool connected = true;
+
+    private int votes;
+    private void Vote()
+    {
+        votes++;
+    }
+}

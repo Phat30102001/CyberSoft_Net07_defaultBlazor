@@ -13,6 +13,20 @@ a, .btn-link {
     background-color: #1b6ec2;
     border-color: #1861ac;
 }
+body {
+    transition: background-color .2s ease, color .2s ease, border-color .2s ease;
+}
+
+body.dark-mode {
+    background: #121826;
+    color: #eef2ff;
+}
+
+body.pink-mode {
+    background: pink;
+    color: gray;
+}
+
 
 app {
     position: relative;
