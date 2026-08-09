@@ -1,0 +1,57 @@
+@page "/signalr/board"
+@using Microsoft.AspNetCore.SignalR.Client
+@implements IAsyncDisposable
+@inject NavigationManager navigation
+
+<PageTitle>SignalR Realtime Board</PageTitle>
+
+<div class="container py-4">
+    <h1>Demo Realtime Board</h1>
+    <div class="alert @(connected ? "alert-success" : "alert-secondary")">
+        Trạng thái : <b>@(connected ? "Connected" : "Disconnected")</b>
+    </div>
+    <section class="card p-4">
+        <div class="input-group">
+            <input class="form-control" @bind="message" placeholder="Nhập Hello rồi Enter" />
+            <button class="btn btn-primary" disabled="@(!connected)" @onclick="Write">Gửi</button>
+        </div>
+        <ul class="mt-3 mb-0">
+            @foreach (var item in messages)
+            {
+                <li><strong>@item.User:</strong> @item.Text</li>
+            }
+        </ul>
+    </section>
+</div>
+
+@code {
+    // HubConnection đại diện cho kết nối hai chiều giữa trang Blazor và VoteHub.
+    private HubConnection hub; // vấn đang lắng nghe "ReceiveBoard"
+    private bool connected = false;
+    private string message = "";
+    private List<(string User, string Text)> messages = [];
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+        //
+        hub = new HubConnectionBuilder().WithUrl(navigation.ToAbsoluteUri("/votehub")).Build();
+        // nhận tín hiệu / láng nghe sự kiện "ReceiveBoard"
+        hub.On<string, string>("ReceiveBoard", (userId, content) =>
+        {
+            messages.Add((userId, content));
+            InvokeAsync(StateHasChanged);
+        });
+        await hub.StartAsync();
+        connected = true;
+        StateHasChanged();
+    }
+
+    private async Task Write(){
+        await hub.SendAsync("WriteBoard",message);
+    }
+
+    public async ValueTask DisposeAsync(){
+        await hub.DisposeAsync();
+    }
+
+}

@@ -1,4 +1,5 @@
 
+using buoi18.Hubs;
 using buoi18.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -12,6 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 //  và blazorserver kích hoạt signalR , 
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+builder.Services.AddSignalR();
 
 // HTTPCLIENT
 builder.Services.AddHttpClient();
@@ -41,6 +43,11 @@ app.UseRouting();
 
 //signalR
 app.MapBlazorHub();
+// kết nối với Hub 
+// localhost:PORT/votehub
+app.MapHub<VoteHub>("/votehub");
+app.MapHub<ChatHub>("/chathub");
+
 // nếu không khớp với page nào thì chuyển về _host để xử lý
 app.MapFallbackToPage("/_Host");
 

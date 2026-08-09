@@ -13,7 +13,10 @@ a, .btn-link {
     background-color: #1b6ec2;
     border-color: #1861ac;
 }
-body {
+body,
+.card,
+.list-group-item,
+.form-control {
     transition: background-color .2s ease, color .2s ease, border-color .2s ease;
 }
 
@@ -22,9 +25,39 @@ body.dark-mode {
     color: #eef2ff;
 }
 
+
 body.pink-mode {
     background: pink;
     color: gray;
+}
+
+body.dark-mode .card,
+body.dark-mode .list-group-item,
+body.dark-mode .form-control {
+    background: #1f2937;
+    color: #eef2ff;
+    border-color: #4b5563;
+}
+.chat-box {
+    min-height: 320px;
+    max-height: 520px;
+    overflow-y: auto;
+    padding: 1rem;
+    border: 1px solid #dee2e6;
+    border-radius: .5rem;
+    background: rgba(127, 127, 127, .05);
+}
+
+.chat-message {
+    padding: .75rem 1rem;
+    margin-bottom: .75rem;
+    border-radius: .75rem;
+    background: rgba(13, 110, 253, .12);
+}
+
+.chat-message small {
+    margin-left: .5rem;
+    opacity: .65;
 }
 
 
