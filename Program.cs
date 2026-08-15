@@ -21,6 +21,10 @@ builder.Services.AddHttpClient();
 //  DI SERVICES
 builder.Services.AddScoped<IStudentApiService, StudentApiService>();
 
+// phát hành token
+builder.Services.AddScoped<JwtAuthService>();
+
+
 // Đăng kí các dịch vụ 
 var app = builder.Build();
 

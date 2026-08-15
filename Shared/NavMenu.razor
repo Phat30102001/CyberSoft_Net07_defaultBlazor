@@ -138,5 +138,20 @@
             <NavLink ActiveClass="active-nav text-danger" Match="NavLinkMatch.All" class="dropdown-item" href="/signalr/chat">Chat</NavLink>
         </div>
     </li>
-
+    @* /AUTH *@
+     <li class="nav-item dropdown">
+        <NavLink
+        ActiveClass="active-nav text-danger" Match="NavLinkMatch.Prefix"
+            class="nav-link dropdown-toggle"
+            data-bs-toggle="dropdown"
+            href="/auth"
+            role="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+            >AUTH</NavLink>
+        <div class="dropdown-menu">
+            <NavLink ActiveClass="active-nav text-danger" Match="NavLinkMatch.All" class="dropdown-item" href="/auth/login-token-js">Login js</NavLink>
+            
+        </div>
+    </li>
 </ul>

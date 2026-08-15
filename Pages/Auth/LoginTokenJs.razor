@@ -1,0 +1,95 @@
+@page "/auth/login-token-js"
+@inject JwtAuthService _jwt;
+@inject IJSRuntime _js;
+@inject NavigationManager _nav;
+
+
+
+<PageTitle>Login token js</PageTitle>
+
+<div class="container py-4" style="max-width: 760px">
+    <h2>Demo login lưu token JWT bằng IJSRunTime</h2>
+    <div class="card">
+        <div class="card-body">
+            <div class="mb-3">
+                <label class="form-label">Tên đăng nhập</label>
+                <input class="form-control" @bind="username" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Mật khẩu</label>
+                <input class="form-control" type="password" @bind="password" />
+            </div>
+            <div class="d-flex flex-wrap gap-2">
+                <button class="btn btn-sm btn-primary" @onclick="Login">Login và lưu token bằng js</button>
+            </div>
+        </div>
+        <div class="alert alert-light border mt-3 mb-0">
+            <strong>Tài khoản demo:</strong>
+            <code>admin / 123456</code> hoặc <code>user / 123456</code>
+        </div>
+        @if (!string.IsNullOrWhiteSpace(authToken))
+        {
+            <div class="alert alert-success mt-3">
+                <strong>Token hiện tại:</strong>
+
+                <div style="word-break: break-all;">
+                    @authToken
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+@code {
+    // user / 123456
+    private string username;
+    private string password;
+
+    private string authToken = "";
+    private bool isLogin = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return; // khác lần đầu thì bỏ qua
+        authToken = await _js.InvokeAsync<string>("localStorage.getItem", "authToken");
+        if (!string.IsNullOrEmpty(authToken))
+        {
+
+            try
+            {
+                var lstClaim = _jwt.CheckToken(authToken);
+                // điều hướng đi chỗ khác
+                // có claim => token hop le -> đá đi qua profile
+                _nav.NavigateTo("/auth/profile");
+            }
+            catch (Exception err)
+            {
+
+            }
+
+        }
+
+
+
+        StateHasChanged();
+    }
+
+    private async Task Login()
+    {
+        var token = "";
+        if (username == "user" && password == "123456")
+        {
+            token = _jwt.GenerateToken(username, "User");
+
+            Console.WriteLine($"[Token user]: {token}");
+        }
+        else if (username == "admin" && password == "123456")
+        {
+            token = _jwt.GenerateToken(username, "Admin");
+            Console.WriteLine($"[Token Admin]: {token}");
+        }
+        await _js.InvokeVoidAsync("localStorage.setItem", "authToken", token);
+    }
+}
