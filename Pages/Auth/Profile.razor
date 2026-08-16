@@ -1,0 +1,43 @@
+@page "/auth/profile"
+@inject IJSRuntime _js;
+@inject JwtAuthService _jwt;
+@inject NavigationManager _nav;
+@using System.Security.Claims;
+Profile
+
+@username
+@* show tên dựa trên token *@
+
+@code {
+    private string authToken = "";
+    private string username = "";
+
+    // lấy token và check thôn tin => show lên UI
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return; // khác lần đầu thì bỏ qua
+        authToken = await _js.InvokeAsync<string>("localStorage.getItem", "authToken");
+        try
+        {
+            @* if (!string.IsNullOrEmpty(authToken))
+            { *@
+
+            
+                var lstClaim = _jwt.CheckToken(authToken);
+                // điều hướng đi chỗ khác
+                // có claim => token hop le -> đá đi qua profile
+                username = lstClaim
+                    .FirstOrDefault(x => x.Type == ClaimTypes.Name)
+                    ?.Value;
+                StateHasChanged();
+            @* } *@
+        }
+        catch (Exception err)
+        {
+            _nav.NavigateTo("/auth/login-token-js");
+
+        }
+
+        StateHasChanged();
+    }
+}
