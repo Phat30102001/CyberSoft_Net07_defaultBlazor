@@ -1,0 +1,77 @@
+@page "/auth/login"
+@inject JwtAuthService _jwt;
+@inject JwtStateProvider _jwtState;
+@inject NavigationManager _nav;
+
+<PageTitle>Đăng nhập</PageTitle>
+
+<div class="container py-4" style="max-width: 620px">
+    <h3>Demo Authentication</h3>
+
+    <div class="mb-3">
+        <label class="form-label">Tên đăng nhập</label>
+        <input class="form-control" @bind="username" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Mật khẩu</label>
+        <input class="form-control" type="password" @bind="password" />
+    </div>
+
+    <button class="btn btn-primary" @onclick="LoginAsync">
+        Đăng nhập
+    </button>
+
+    @if (!string.IsNullOrWhiteSpace(errorMessage))
+    {
+        <div class="alert alert-danger mt-3">@errorMessage</div>
+    }
+
+    <div class="alert alert-info mt-3">
+        <strong>Tài khoản demo</strong>
+        <div>Admin: <code>admin / 123456</code></div>
+        <div>User: <code>user / 123456</code></div>
+    </div>
+</div>
+
+@code {
+    private string username = string.Empty;
+    private string password = string.Empty;
+    private string errorMessage = string.Empty;
+
+    // thông thường lất token từ js 
+    // nhưng giờ đã có state provider, mình dùng qua provider
+    protected override async Task OnInitializedAsync(){
+        var auth = await _jwtState.GetAuthenticationStateAsync();
+
+        if(auth.User.Identity.IsAuthenticated){
+            _nav.NavigateTo("/auth/profile");
+        }
+    }
+
+
+    private async Task LoginAsync()
+    {
+        var token = "";
+        var role = "";
+        if (username == "user" && password == "123456")
+        {
+            role= "User";
+        }
+        else if (username == "admin" && password == "123456")
+        {
+            role="Admin";
+        }
+        if (string.IsNullOrWhiteSpace(role))
+        {
+            errorMessage = "Sai tài khoản hoặc mật khẩu.";
+            return; // keets thuc ham login
+        }
+        token = _jwt.GenerateToken(username,role);
+
+        // luu token bang ham trong state provider
+        
+        await _jwtState.SaveToken(token);
+        _nav.NavigateTo("/auth/profile");
+    }
+}
