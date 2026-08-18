@@ -1,0 +1,32 @@
+@* show tt đăng nhâp *@
+@* đã đăng nhập thì thấy xin chào tên + button đăng xuất
+- Ngược lại là button đăng nhập
+ *@
+@inject JwtStateProvider _jwtState;
+@inject NavigationManager _nav;
+
+<AuthorizeView>
+    <Authorized Context="authContext">
+        @* đã đăng nhập thì thấy cái này *@
+        <span class="navbar-text me-2">
+            Xin chào <b>@authContext.User.Identity.Name</b>
+        </span>
+        <button class="btn btn-sm btn-outline-danger" @onclick="RemoveToken">
+            Đăng xuất
+        </button>
+    </Authorized>
+    <NotAuthorized>
+        @* chưa đăng nhập *@
+        <a class="btn btn-sm btn-outline-danger" href="/auth/login">
+            Đăng nhập
+        </a>
+    </NotAuthorized>
+</AuthorizeView>
+
+
+@code{
+    private async Task RemoveToken(){
+        await _jwtState.RemoveToken();
+        _nav.NavigateTo("/auth/login");
+    }
+}

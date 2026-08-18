@@ -1,7 +1,9 @@
 
+using Blazored.LocalStorage;
 using buoi18.Hubs;
 using buoi18.Services;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,6 +25,14 @@ builder.Services.AddScoped<IStudentApiService, StudentApiService>();
 
 // phát hành token
 builder.Services.AddScoped<JwtAuthService>();
+
+//DI  bật phần phân quyền trong component Blazor
+builder.Services.AddAuthenticationCore();
+// DI localstore blazored - thư viện đọc localstorage
+builder.Services.AddBlazoredLocalStorage();
+// Đăng lý JwtStateProvider
+builder.Services.AddScoped<JwtStateProvider>();
+builder.Services.AddScoped<AuthenticationStateProvider>(ser => ser.GetRequiredService<JwtStateProvider>());
 
 
 // Đăng kí các dịch vụ 

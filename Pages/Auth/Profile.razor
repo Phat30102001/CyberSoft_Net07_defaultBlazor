@@ -1,28 +1,90 @@
 @page "/auth/profile"
-@inject IJSRuntime _js;
-@inject JwtAuthService _jwt;
-@inject NavigationManager _nav;
+@*
+@attribute [Authorize] *@
+@inject JwtStateProvider _jwtState;
 @using System.Security.Claims;
-Profile
+<div class="container py-4">
+    @* CHƯA ĐĂNG NHẬP THÌ CÓ THỂ CUSTOM LẠI PHẦN NotAuthorized tuỳ ý , không custom thuid dùng của App*@
+    <AuthorizeView>
+        <Authorized>
+            <h3>Trang cá nhân</h3>
+            <div class="alert alert-success">
+                Trang này dùng <code>[Authorize]</code>: mọi user đã đăng nhập đều được xem.
+            </div>
+            <ul class="list-group" style="max-width: 600px">
+                <li class="list-group-item"><strong>Username:</strong> @username</li>
+                <li class="list-group-item"><strong>Role:</strong> @role</li>
+                <li class="list-group-item"><strong>Lớp học:</strong> @className</li>
+            </ul>
+        </Authorized>
+        <NotAuthorized>
+            <h3>Custom lại view chưa đăng nhập <code>NotAuthorized</code> </h3>
+            <div class="alert alert-secondary my-4">
+                Bạn chưa đăng nhập. <a href="/auth/login">Đăng nhập ngay</a>.
+            </div>
+        </NotAuthorized>
+    </AuthorizeView>
+     <AuthorizeView Roles="Admin">
+        <Authorized>
+            <div class="alert alert-warning my-4">
+                Nội dung này chỉ Admin nhìn thấy nhờ <code>AuthorizeView</code>.
+            </div>
+        </Authorized>
+    </AuthorizeView>
 
-@username
+</div>
+
+
 @* show tên dựa trên token *@
 
 @code {
     private string authToken = "";
     private string username = "";
+    private string role = "";
+    private string className = "";
 
+    protected override async Task OnInitializedAsync()
+    {
+        var auth = await _jwtState.GetAuthenticationStateAsync();
+
+        username = auth.User.Identity.Name;
+        role = auth.User.FindFirst(ClaimTypes.Role).Value;
+        className = auth.User.FindFirst("LopHoc").Value;
+
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     // lấy token và check thôn tin => show lên UI
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    @* protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (!firstRender) return; // khác lần đầu thì bỏ qua
         authToken = await _js.InvokeAsync<string>("localStorage.getItem", "authToken");
         try
         {
-            @* if (!string.IsNullOrEmpty(authToken))
-            { *@
-
-            
+            //if (!string.IsNullOrEmpty(authToken))
+            //{
                 var lstClaim = _jwt.CheckToken(authToken);
                 // điều hướng đi chỗ khác
                 // có claim => token hop le -> đá đi qua profile
@@ -30,14 +92,12 @@ Profile
                     .FirstOrDefault(x => x.Type == ClaimTypes.Name)
                     ?.Value;
                 StateHasChanged();
-            @* } *@
+            // }
         }
         catch (Exception err)
         {
-            _nav.NavigateTo("/auth/login-token-js");
-
+            _nav.NavigateTo("/auth/login");
         }
-
         StateHasChanged();
-    }
+    } *@
 }

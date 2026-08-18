@@ -1,0 +1,17 @@
+@page "/auth/admin"
+@*  admin mới xem được view này *@
+@attribute [Authorize(Roles = "Admin")]
+<PageTitle>ADMIN</PageTitle>
+<div class="container py-4">
+    <h3>Trang quản trị</h3>
+
+    <div class="alert alert-success">
+        Bạn đã đăng nhập và có role <strong>Admin</strong>.
+    </div>
+
+   
+</div>
+
+@code{
+
+}

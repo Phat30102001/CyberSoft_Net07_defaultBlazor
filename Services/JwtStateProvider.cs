@@ -15,7 +15,7 @@ public class JwtStateProvider : AuthenticationStateProvider
     private readonly ILocalStorageService _localStorageService;
     private readonly IConfiguration _configuration;
     private readonly JwtAuthService _jwt;
-        // Principal không có identity xác thực đại diện cho khách chưa đăng nhập.
+    // Principal không có identity xác thực đại diện cho khách chưa đăng nhập.
     private static readonly ClaimsPrincipal Anonymous =
         new(new ClaimsIdentity());
 
@@ -29,7 +29,7 @@ public class JwtStateProvider : AuthenticationStateProvider
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
     {
         // lấy token từ local có key là authToken
-        var token  = await _localStorageService.GetItemAsync<string>("authToken");
+        var token = await _localStorageService.GetItemAsync<string>("authToken");
         if (string.IsNullOrEmpty(token))
         {
             return new AuthenticationState(Anonymous); // ẩn danh 
@@ -38,7 +38,7 @@ public class JwtStateProvider : AuthenticationStateProvider
         {
             // 
             var principal = _jwt.CheckTokenState(token);
-            return new AuthenticationState(principal);
+            return new AuthenticationState(principal); // Claim.Name, Role, LopHoc
         }
         catch
         {
@@ -47,7 +47,19 @@ public class JwtStateProvider : AuthenticationStateProvider
             await _localStorageService.RemoveItemAsync("authToken");
             return new AuthenticationState(Anonymous);
         }
-
-        throw new System.NotImplementedException();
     }
+    // hàm lưu token ()
+    public async Task SaveToken(string token)
+    {
+        await _localStorageService.SetItemAsync("authToken", token);
+        var principal = _jwt.CheckTokenState(token);
+        NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(principal)));
+    }
+    // xoá token (đăng xuất)
+    public async Task RemoveToken()
+    {
+        await _localStorageService.RemoveItemAsync("authToken");
+        NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(Anonymous)));
+    }
+
 }

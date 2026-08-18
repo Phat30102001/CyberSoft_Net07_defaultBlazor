@@ -1,8 +1,13 @@
 ﻿@page "/"
 @using buoi18.Pages.Lifecycle
+@*  cần xác thực danh tính thì mới xem được
+mọi tài khoản đã đăng nhập đều xem được
+ *@
+@attribute [Authorize]
 @* "/" : localhost:5000 *@
 
 @* <NavMenu/> *@
+<PageTitle>Page Index</PageTitle>
 
 <FirstLifecycle/>
 
